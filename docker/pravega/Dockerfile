@@ -14,17 +14,14 @@
 # limitations under the License.
 #
 
-ARG baseImage=params.baseImage
+ARG baseImage=adoptopenjdk/openjdk11:jre-11.0.11_9-alpine
 
-RUN if [[ -z baseImage ]]; \
-    then echo *** Argument Not Provided *** ; \
-    baseImage = adoptopenjdk/openjdk11:jre-11.0.11_9-alpine; \
- \
-fi
-FROM baseImage
-ARG command=params.command
-RUN if [[ `command -v command` ]]; then \
-    command ;\
+FROM $baseImage
+
+ARG command=${command}
+
+RUN if [[ `$command -v $command` ]]; then \
+    bash -c $command ;\
     else \
     apk --update --no-cache add \
             #used in readiness and liveness probes

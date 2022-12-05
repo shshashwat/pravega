@@ -1523,6 +1523,8 @@ task buildPravegaImage(type: DockerBuildTask, dependsOn: preparePravegaImage) {
     baseTag = pravegaBaseTag
     dockerDir = preparePravegaImage.destinationDir.absolutePath
     dockerFile = "${dockerDir}/Dockerfile"
+    baseImage = "${baseImage}"
+    command = "${command}"
 }
 
 task buildBookkeeperImage(type: DockerBuildTask) {
@@ -1563,6 +1565,8 @@ class DockerBuildTask extends Exec {
     String baseTag
     String dockerDir
     String dockerFile
+    String baseImage
+    String command
 
     DockerBuildTask() {
         executable project.dockerExecutable
@@ -1572,6 +1576,8 @@ class DockerBuildTask extends Exec {
         args "-t", "${->baseTag}:latest"
         args "-f", "${->dockerFile}"
         args "${->dockerDir}"
+        args "--build-arg", "${->baseImage}"
+        args "${->command}"
     }
 }
 
