@@ -13,17 +13,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-FROM adoptopenjdk/openjdk11:jre-11.0.11_9-alpine
 
-RUN apk --update --no-cache add \
-    #used in readiness and liveness probes
-    curl \
-    #used in wait_for function
-    python3 \
-    #used in init_kubernetes
-    jq \
-    && ln -sf python3 /usr/bin/python
-
+ARG baseImage=params.baseImage
+if [[ -z "$arg" ]] ; then echo Argument not provided ; else echo Argument is $arg ; fi
+if[[-z baseImage]]; then
+    baseImage = adoptopenjdk/openjdk11:jre-11.0.11_9-alpine
+fi
+FROM baseImage
+ARG command=params.command
+if[[-z command]]; then
+    RUN apk --update --no-cache add \
+        #used in readiness and liveness probes
+        curl \
+        #used in wait_for function
+        python3 \
+        #used in init_kubernetes
+        jq \
+        && ln -sf python3 /usr/bin/python;
+    else RUN command;
+fi
 EXPOSE 9090 9091 10000 12345
 
 WORKDIR /opt/pravega
