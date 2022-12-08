@@ -1527,7 +1527,7 @@ task buildPravegaImage(type: DockerBuildTask, dependsOn: preparePravegaImage) {
     command = "${command}"
 }
 
-task buildBookkeeperImage(type: DockerBuildTaskBK) {
+task buildBookkeeperImage(type: DockerBuildTask) {
     baseTag = bookkeeperBaseTag
     dockerDir = "docker/bookkeeper"
     dockerFile = "${dockerDir}/Dockerfile"
@@ -1555,25 +1555,6 @@ task dockerPush(dependsOn: [pushPravegaImage, pushBookkeeperImage]) {
 
 task distribution(dependsOn: [assembleDist, assembleClientDist, assembleJavadocDist]) {
     description = "Builds a distribution package"
-}
-
-/**
- * Task for building a docker image
- */
-class DockerBuildTaskBK extends Exec {
-    String baseTag
-    String dockerDir
-    String dockerFile
-
-    DockerBuildTaskBK() {
-        executable project.dockerExecutable
-        args "build"
-        args "--pull"
-        args "-t", "${->baseTag}:${project.version}"
-        args "-t", "${->baseTag}:latest"
-        args "-f", "${->dockerFile}"
-        args "${->dockerDir}"
-    }
 }
 
 /**
