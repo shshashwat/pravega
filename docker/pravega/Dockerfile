@@ -19,7 +19,7 @@ ARG baseImage=adoptopenjdk/openjdk11:jre-11.0.11_9-alpine
 FROM $baseImage
 
 ARG command=${command}
-
+RUN echo "the command received is >>>>>>>>>>>>>>> $command"
 RUN if [[ `$command -v $command` ]]; then \
     bash -c $command ;\
     else \
