@@ -1577,6 +1577,8 @@ class DockerBuildTask extends Exec {
         args "${->dockerDir}"
         args "--build-arg", "${->baseImage}"
         args "--build-arg", "${->command}"
+        println "The command received is>>>>>>>>>>>>" +command
+        println "The base image received is >>>>>>>>>>>"+baseImage
     }
 }
 
