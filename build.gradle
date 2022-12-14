@@ -18,9 +18,6 @@ import org.gradle.internal.jvm.Jvm
 // Apply the java plugin to add support for Java
 buildscript {
 
-    String baseImage
-    String command
-
     // log the current JVM version.
     println "Build JVM Version is : " + Jvm.current()
     repositories {
@@ -1521,7 +1518,8 @@ task preparePravegaImage(type: Copy) {
         exclude "**/*.bat", "**/log4j*.jar"
     }
 }
-
+String baseImage
+String command
 task buildPravegaImage(type: DockerBuildTask, dependsOn: preparePravegaImage) {
     baseTag = pravegaBaseTag
     baseImage = pravegaBaseImage
@@ -1529,9 +1527,6 @@ task buildPravegaImage(type: DockerBuildTask, dependsOn: preparePravegaImage) {
     dockerDir = preparePravegaImage.destinationDir.absolutePath
     dockerFile = "${dockerDir}/Dockerfile"
 
-    project.ext.baseimage = pravegaBaseImage
-
-//    buildPravegaImage.ext.command = pravegaCommand
     println "The command received is at first ><<<<<<<<<<<<<<<<<<>>>>>>>>>>>" +command
     println "The base image received is at first <<<<<<<<<<<<<>>>>>>>>>>>" +baseImage
     println "The base tag received is at first <<<<<<<<<<<>>>>>>>>>>>" +baseTag
