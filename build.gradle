@@ -1525,6 +1525,8 @@ task buildPravegaImage(type: DockerBuildTask, dependsOn: preparePravegaImage) {
     command = pravegaCommand
     dockerDir = preparePravegaImage.destinationDir.absolutePath
     dockerFile = "${dockerDir}/Dockerfile"
+    buildPravegaImage.ext.baseImage = pravegaBaseImage
+    buildPravegaImage.ext.command = pravegaCommand
     println "The command received is at first ><<<<<<<<<<<<<<<<<<>>>>>>>>>>>" +command
     println "The base image received is at first <<<<<<<<<<<<<>>>>>>>>>>>" +baseImage
     println "The base tag received is at first <<<<<<<<<<<>>>>>>>>>>>" +baseTag
@@ -1572,11 +1574,10 @@ class DockerBuildTask extends Exec {
 
     DockerBuildTask() {
         executable project.dockerExecutable
-        println "The command received is>>>>>>>>>>>>" +"${->command}"
-        println "The base image received is >>>>>>>>>>>"+"${->baseImage}"
+        println "The command received is>>>>>>>>>>>>" +buildPravegaImage.command
+        println "The base image received is >>>>>>>>>>>"+buildPravegaImage.baseImage
         println "The base tag received is >>>>>>>>>>>"+"${->baseTag}"
         println "The dockerfile received is >>>>>>>>>>>"+"${->dockerFile}"
-        println "The base tag received is >>>>>>>>>>>"+ buildPravegaImage.baseTag
         args "build"
         args "--pull"
         args "-t", "${->baseTag}:${project.version}"
