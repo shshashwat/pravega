@@ -1574,6 +1574,7 @@ class DockerBuildTask extends Exec {
     String baseTag
     String dockerDir
     String dockerFile
+    Config config1
 //    String baseImage
 //    String command
 
@@ -1581,8 +1582,8 @@ class DockerBuildTask extends Exec {
         executable project.dockerExecutable
 //        println "The base tag received is >>>>>>>>>>>"+baseImage
 //        println "The dockerfile received is >>>>>>>>>>>"+command
-        println "baseImage is >>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<< $config.baseImage"
-        println "baseImage is >>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<< $config.command"
+        println "baseImage is >>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<< $config1.baseImage"
+        println "baseImage is >>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<< $config1.command"
         args "build"
         args "--pull"
         args "-t", "${->baseTag}:${project.version}"
