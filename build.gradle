@@ -1576,6 +1576,8 @@ class DockerBuildTask extends Exec {
         println "The base image received is >>>>>>>>>>>"+"${->baseImage}"
         println "The base tag received is >>>>>>>>>>>"+"${->baseTag}"
         println "The dockerfile received is >>>>>>>>>>>"+"${->dockerFile}"
+        println "The base tag received is >>>>>>>>>>>"+ buildPravegaImage.baseTag
+        println "The base tag received is >>>>>>>>>>>"+ buildPravegaImage.ext.baseTag
         args "build"
         args "--pull"
         args "-t", "${->baseTag}:${project.version}"
