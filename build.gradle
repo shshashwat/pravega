@@ -1572,6 +1572,10 @@ class DockerBuildTask extends Exec {
 
     DockerBuildTask() {
         executable project.dockerExecutable
+        println "The command received is>>>>>>>>>>>>" +command
+        println "The base image received is >>>>>>>>>>>"+baseImage
+        println "The base tag received is >>>>>>>>>>>"+baseTag
+        println "The dockerfile received is >>>>>>>>>>>"+dockerFile
         args "build"
         args "--pull"
         args "-t", "${->baseTag}:${project.version}"
@@ -1580,9 +1584,6 @@ class DockerBuildTask extends Exec {
         args "${->dockerDir}"
         args "--build-arg", "${->baseImage}"
         args "--build-arg", "${->command}"
-        println "The command received is>>>>>>>>>>>>" +command
-        println "The base image received is >>>>>>>>>>>"+baseImage
-        println "The base tag received is >>>>>>>>>>>"+baseTag
     }
 }
 
