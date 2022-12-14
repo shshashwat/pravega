@@ -1521,13 +1521,13 @@ task preparePravegaImage(type: Copy) {
 
 task buildPravegaImage(type: DockerBuildTask, dependsOn: preparePravegaImage) {
     baseTag = pravegaBaseTag
-    baseImage = System.getenv("pravegaBaseImage")
-    command = System.getenv("pravegaCommand")
+    baseImage = pravegaBaseImage
+    command = pravegaCommand
     dockerDir = preparePravegaImage.destinationDir.absolutePath
     dockerFile = "${dockerDir}/Dockerfile"
-    println "The command received is><<<<<<<<<<<<<<<<<<>>>>>>>>>>>" +command
-    println "The base image received is <<<<<<<<<<<<<>>>>>>>>>>>" +baseImage
-    println "The base tag received is <<<<<<<<<<<>>>>>>>>>>>" +baseTag
+    println "The command received is at first ><<<<<<<<<<<<<<<<<<>>>>>>>>>>>" +command
+    println "The base image received is at first <<<<<<<<<<<<<>>>>>>>>>>>" +baseImage
+    println "The base tag received is at first <<<<<<<<<<<>>>>>>>>>>>" +baseTag
 }
 
 task buildBookkeeperImage(type: DockerBuildTask) {
