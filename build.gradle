@@ -1518,14 +1518,15 @@ task preparePravegaImage(type: Copy) {
         exclude "**/*.bat", "**/log4j*.jar"
     }
 }
-String baseImage
-String command
+DockerBuildTask config = new DockerBuildTask()
 task buildPravegaImage(type: DockerBuildTask, dependsOn: preparePravegaImage) {
     baseTag = pravegaBaseTag
     baseImage = pravegaBaseImage
     command = pravegaCommand
     dockerDir = preparePravegaImage.destinationDir.absolutePath
     dockerFile = "${dockerDir}/Dockerfile"
+    config.baseImage = pravegaBaseImage
+    config.command = pravegaCommand
 
     println "The command received is at first ><<<<<<<<<<<<<<<<<<>>>>>>>>>>>" +command
     println "The base image received is at first <<<<<<<<<<<<<>>>>>>>>>>>" +baseImage
@@ -1569,13 +1570,14 @@ class DockerBuildTask extends Exec {
     String baseTag
     String dockerDir
     String dockerFile
-//    String baseImage
-//    String command
+    String baseImage
+    String command
 
     DockerBuildTask() {
         executable project.dockerExecutable
-        println "The base tag received is >>>>>>>>>>>"+baseImage
-        println "The dockerfile received is >>>>>>>>>>>"+command
+//        println "The base tag received is >>>>>>>>>>>"+baseImage
+//        println "The dockerfile received is >>>>>>>>>>>"+command
+        println "baseImage is >>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<< $config.baseImage"
         args "build"
         args "--pull"
         args "-t", "${->baseTag}:${project.version}"
